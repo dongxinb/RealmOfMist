@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     startActivityForResult(intent, 1000);
                     Log.d("Main", "Ranking menu pressed.");
                 }
+                mMenu.toggle();
             }
         };
         mMenuProfile.setOnClickListener(menuItemListener);
