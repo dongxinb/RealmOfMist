@@ -116,12 +116,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .mapToolbarEnabled(true)
                 .rotateGesturesEnabled(false)
                 .tiltGesturesEnabled(false);
-        mMapFragment = MapFragment.newInstance(options);
+//        mMapFragment = MapFragment.newInstance(options);
+        mMapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.map_fragment);
 
-        FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.mainContainer, mMapFragment);
-        fragmentTransaction.commit();
+//        FragmentTransaction fragmentTransaction =
+//                getFragmentManager().beginTransaction();
+//        fragmentTransaction.add(R.id.mainContainer, mMapFragment);
+//        fragmentTransaction.commit();
     }
 
     // set up google play service

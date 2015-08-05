@@ -11,40 +11,59 @@
     tools:context="edu.zju.realmofmist.Main2Activity"
     android:id="@+id/mainContainer">
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/menu_actions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        fab:fab_addButtonColorNormal="@color/white"
-        fab:fab_addButtonColorPressed="@color/main"
-        fab:fab_addButtonPlusIconColor="@color/gray"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        fab:fab_addButtonSize="mini"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp">
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/menu_profile"
+        <fragment
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_title="Profile"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="@color/main"/>
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map_fragment"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/menu_ranking"
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu_actions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_title="Ranking"
-            fab:fab_size="mini"
-            fab:fab_colorPressed="@color/main"/>
+            fab:fab_addButtonColorNormal="@color/white"
+            fab:fab_addButtonColorPressed="@color/main"
+            fab:fab_addButtonPlusIconColor="@color/gray"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            fab:fab_addButtonSize="mini"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/menu_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_title="Profile"
+                fab:fab_size="mini"
+                fab:fab_colorPressed="@color/main"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/menu_ranking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_title="Ranking"
+                fab:fab_size="mini"
+                fab:fab_colorPressed="@color/main"/>
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </LinearLayout>
 
 </RelativeLayout>
 
