@@ -29,6 +29,9 @@ public class RankingListAdapter extends BaseAdapter {
 
     private static LayoutInflater sInflater = null;
 
+    public static void SetLayoutInflater(Activity a) {
+        sInflater = (LayoutInflater) a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
 
     @Override
     public int getCount() {
@@ -38,7 +41,6 @@ public class RankingListAdapter extends BaseAdapter {
 //        else
 //            return mRankingModel.size();
     }
-
 
     @Override
     public Object getItem(int i) {
@@ -63,8 +65,6 @@ public class RankingListAdapter extends BaseAdapter {
         return useView;
     }
 
-    public static void SetLayoutInflater(Activity a) {
-        sInflater = (LayoutInflater) a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
+
 
 }
