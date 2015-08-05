@@ -22,10 +22,11 @@
         android:layout_marginEnd="37dp"
         android:layout_alignTop="@+id/name"
         android:layout_toLeftOf="@+id/ranking"
-        android:layout_toStartOf="@+id/ranking" />
+        android:layout_toStartOf="@+id/ranking"
+        android:layout_alignBottom="@+id/name" />
 
     <TextView
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="111"
         android:id="@+id/ranking"
@@ -33,5 +34,6 @@
         android:layout_marginEnd="37dp"
         android:layout_alignTop="@+id/area"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/name" />
 </RelativeLayout>
