@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main">#B22BB494</color>
+    <color name="white">#ffffff</color>
+    <color name="pink">#e91e63</color>
+    <color name="gray">#808080</color>
+    <color name="light_gray">#d2d2d2</color>
+</resources>
