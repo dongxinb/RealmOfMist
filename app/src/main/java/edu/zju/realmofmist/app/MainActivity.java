@@ -1,6 +1,5 @@
 package edu.zju.realmofmist.app;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
@@ -21,22 +20,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-
-import java.text.DateFormat;
-import java.util.Date;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -210,16 +193,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
 
-//        if (mMap != null) {
-//            CircleOptions circleOptions = new CircleOptions()
-//                    .center(new LatLng(location.getLatitude(), location.getLongitude()))
-//                    .radius(100); // In meters
-//
-//            // Get back the mutable Circle
-//            Circle circle = mMap.addCircle(circleOptions);
-//        }
+        double currentLatitude = mCurrentLocation.getLatitude();
+        double currentLongitude = mCurrentLocation.getLongitude();
 
-        Log.d("MyDebug", "La: " + mCurrentLocation.getLatitude() + " Lo: " + mCurrentLocation.getLongitude() + " TIME: " + mLastUpdateTime);
+        Log.d("MyDebug", "La: " + currentLatitude + " Lo: " + currentLongitude + " TIME: " + mLastUpdateTime);
     }
 
     @Override
