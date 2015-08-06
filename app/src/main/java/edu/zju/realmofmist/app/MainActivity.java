@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -20,21 +21,24 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 import edu.zju.realmofmist.R;
+import edu.zju.realmofmist.view.FogMask2;
 import edu.zju.realmofmist.view.MyMapView;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ViewTreeObserver.OnPreDrawListener {
 
     FloatingActionsMenu mMenu;
     FloatingActionButton mMenuProfile;
     FloatingActionButton mMenuRanking;
     FloatingActionButton mMenuLogin;
+    FogMask2 mMaskView;
 
     private MyMapView mMapView;
     private GoogleApiClient mGoogleApiClient;
@@ -58,9 +62,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        linkView();
 
+        linkView();
         setMapView();
+
+        addPreDrawListener();
+
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.getMapAsync(this);
@@ -103,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMenuProfile = (FloatingActionButton)findViewById(R.id.menu_profile);
         mMenuRanking = (FloatingActionButton)findViewById(R.id.menu_ranking);
         mMenuLogin = (FloatingActionButton)findViewById(R.id.menu_login);
+        mMaskView = (FogMask2)findViewById(R.id.mask_view);
 
         View.OnClickListener menuItemListener = new View.OnClickListener() {
             @Override
@@ -130,9 +138,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMenuLogin.setOnClickListener(menuItemListener);
     }
 
+    private void addPreDrawListener() {
+        ViewTreeObserver observer = mMapView.getViewTreeObserver();
+        observer.addOnPreDrawListener(this);
+
+    }
+
+    //pre draw listener
+    @Override
+    public boolean onPreDraw() {
+//        Log.d("OnPreDraw", "onPreDraw()");
+        CameraPosition position = mMap.getCameraPosition();
+        Log.d("Camera", String.format("%f %s", position.zoom, position.target.toString()));
+        mMaskView.doDraw();
+//        System.out.println(mMap.getCameraPosition());
+        return true;
+    }
+
     // set up fragment
     private void setMapView() {
         mMapView = (MyMapView) findViewById(R.id.mapView);
+
     }
 
     // set up google play service
