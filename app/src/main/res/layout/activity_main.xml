@@ -34,7 +34,7 @@
             map:uiScrollGestures="true"
             />
 
-        <edu.zju.realmofmist.view.FogMask
+        <edu.zju.realmofmist.view.FogMask2
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mask_view"
