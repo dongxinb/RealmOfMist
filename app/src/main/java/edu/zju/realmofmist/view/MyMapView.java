@@ -26,4 +26,6 @@ public class MyMapView extends MapView {
     public MyMapView(Context context, GoogleMapOptions options) {
         super(context, options);
     }
+
+
 }

@@ -12,14 +12,19 @@ import android.view.View;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         linkView();
 
         setMapView();
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();
         mMapView.getMapAsync(this);
         buildGoogleApiClient();
         createLocationRequest();
@@ -110,16 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // set up fragment
     private void setMapView() {
-//        mMapFragment = (MapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map);
-
-//        mMapFragment = MapFragment.newInstance(options);
         mMapView = (MyMapView) findViewById(R.id.mapView);
-
-//        FragmentTransaction fragmentTransaction =
-//                getFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.mainContainer, mMapFragment);
-//        fragmentTransaction.commit();
     }
 
     // set up google play service

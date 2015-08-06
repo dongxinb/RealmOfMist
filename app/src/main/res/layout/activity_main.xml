@@ -21,6 +21,8 @@
             android:layout_height="wrap_content"
             class="edu.zju.realmofmist.view.MyMapView"
             android:id="@+id/mapView"
+            android:apiKey="AIzaSyBQyXvRnZmxSbQ2IbNarfxMJdUGrMsOHhc"
+            android:clickable="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
