@@ -11,7 +11,7 @@
     tools:context="edu.zju.realmofmist.Main2Activity"
     android:id="@+id/mainContainer">
 
-    <LinearLayout
+    <RelativeLayout
         android:background="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -63,7 +63,7 @@
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
 
