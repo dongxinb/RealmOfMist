@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
@@ -18,31 +19,43 @@ public class MyMapView extends MapView {
 
     public MyMapView(Context context) {
         super(context);
+        setWillNotDraw(false);
     }
 
     public MyMapView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setWillNotDraw(false);
     }
 
     public MyMapView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setWillNotDraw(false);
     }
 
     public MyMapView(Context context, GoogleMapOptions options) {
         super(context, options);
+        setWillNotDraw(false);
     }
 
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        super.onDraw(canvas);
+//        Canvas canvas1 = new Canvas();
+//
+//
+//    }
+
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        Canvas canvas1 = new Canvas();
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
 
         Paint clearAwayPaint = new Paint();
         clearAwayPaint.setStyle(Paint.Style.FILL);
         clearAwayPaint.setColor(Color.BLACK);
         clearAwayPaint.setAlpha(255);
-        clearAwayPaint.setShader(new RadialGradient(10, 10, 10, Color.BLACK, Color.TRANSPARENT, Shader.TileMode.MIRROR));
+        clearAwayPaint.setShader(new RadialGradient(100, 100, 100, Color.BLACK, Color.TRANSPARENT, Shader.TileMode.MIRROR));
 
-        canvas.drawCircle(10, 10, 10, clearAwayPaint);
+        canvas.drawCircle(100, 100, 100, clearAwayPaint);
+        Log.d("MapView", "onDraw()");
     }
 }
