@@ -51,11 +51,12 @@ public class MyMapView extends MapView {
 
         Paint clearAwayPaint = new Paint();
         clearAwayPaint.setStyle(Paint.Style.FILL);
-        clearAwayPaint.setColor(Color.BLACK);
-        clearAwayPaint.setAlpha(255);
-        clearAwayPaint.setShader(new RadialGradient(100, 100, 100, Color.BLACK, Color.TRANSPARENT, Shader.TileMode.MIRROR));
+        clearAwayPaint.setColor(0xffbbbbbb);
+        clearAwayPaint.setAlpha(150);
+        clearAwayPaint.setShader(new )
+        //clearAwayPaint.setShader(new RadialGradient(100, 100, 100, Color.BLACK, Color.TRANSPARENT, Shader.TileMode.MIRROR));
 
-        canvas.drawCircle(100, 100, 100, clearAwayPaint);
+        canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), clearAwayPaint);
         Log.d("MapView", "onDraw()");
     }
 }
