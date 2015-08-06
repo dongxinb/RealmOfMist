@@ -51,9 +51,8 @@ public class MyMapView extends MapView {
 
         Paint clearAwayPaint = new Paint();
         clearAwayPaint.setStyle(Paint.Style.FILL);
-        clearAwayPaint.setColor(0xffbbbbbb);
+        clearAwayPaint.setColor(0xFFBBBBBB);
         clearAwayPaint.setAlpha(150);
-        clearAwayPaint.setShader(new )
         //clearAwayPaint.setShader(new RadialGradient(100, 100, 100, Color.BLACK, Color.TRANSPARENT, Shader.TileMode.MIRROR));
 
         canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), clearAwayPaint);
