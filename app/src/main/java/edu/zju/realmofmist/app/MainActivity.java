@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import edu.zju.realmofmist.R;
+import edu.zju.realmofmist.view.MyMapView;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuProfile;
     FloatingActionButton mMenuRanking;
 
-    private MapFragment mMapFragment;
+    private MyMapView mMapView;
     private GoogleApiClient mGoogleApiClient;
 
     private GoogleMap mMap;
@@ -56,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_main);
         linkView();
 
-        setMapFragment();
-        mMapFragment.getMapAsync(this);
+        setMapView();
+        mMapView.getMapAsync(this);
         buildGoogleApiClient();
         createLocationRequest();
     }
@@ -108,17 +109,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     // set up fragment
-    private void setMapFragment() {
+    private void setMapView() {
 //        mMapFragment = (MapFragment) getFragmentManager()
 //                .findFragmentById(R.id.map);
 
-        GoogleMapOptions options = new GoogleMapOptions();
-        options.mapType(GoogleMap.MAP_TYPE_HYBRID)
-                .mapToolbarEnabled(true)
-                .rotateGesturesEnabled(false)
-                .tiltGesturesEnabled(false);
 //        mMapFragment = MapFragment.newInstance(options);
-        mMapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.map_fragment);
+        mMapView = (MyMapView) findViewById(R.id.mapView);
 
 //        FragmentTransaction fragmentTransaction =
 //                getFragmentManager().beginTransaction();
