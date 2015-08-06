@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMoveToCurPos = true;
         }
 
-        Log.d("MyDebug", "La: " + currentLatitude + " Lo: " + currentLongitude + " TIME: " + mLastUpdateTime);
+        Log.d("Locations", "La: " + currentLatitude + " Lo: " + currentLongitude + " TIME: " + mLastUpdateTime);
     }
 
     @Override
@@ -225,5 +225,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setMyLocationEnabled(true);
         mMap = googleMap;
+        mMap.getUiSettings().setMapToolbarEnabled(false);
     }
 }
