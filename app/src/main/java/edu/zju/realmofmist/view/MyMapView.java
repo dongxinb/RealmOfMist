@@ -91,5 +91,6 @@ public class MyMapView extends MapView {
 ////        canvas.drawPath(path, mPaint);
 //
 //        Log.d("MapView", "onDraw()");
+
     }
 }

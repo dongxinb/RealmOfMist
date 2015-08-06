@@ -34,6 +34,7 @@ public class FogMask extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
         setFocusable(true);
         Log.d("FogMask", "context attr");
+        setWillNotDraw(false);
     }
 
     @Override

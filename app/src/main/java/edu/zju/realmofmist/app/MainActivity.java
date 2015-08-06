@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionsMenu mMenu;
     FloatingActionButton mMenuProfile;
     FloatingActionButton mMenuRanking;
+    FloatingActionButton mMenuLogin;
 
     private MyMapView mMapView;
     private GoogleApiClient mGoogleApiClient;
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMenu = (FloatingActionsMenu)findViewById(R.id.menu_actions);
         mMenuProfile = (FloatingActionButton)findViewById(R.id.menu_profile);
         mMenuRanking = (FloatingActionButton)findViewById(R.id.menu_ranking);
+        mMenuLogin = (FloatingActionButton)findViewById(R.id.menu_login);
 
         View.OnClickListener menuItemListener = new View.OnClickListener() {
             @Override
@@ -115,11 +117,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     startActivityForResult(intent, 1000);
                     Log.d("Main", "Ranking menu pressed.");
                 }
+                else if (v == mMenuLogin) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivityForResult(intent, 1000);
+                    Log.d("Main", "Login menu pressed.");
+                }
                 mMenu.toggle();
             }
         };
         mMenuProfile.setOnClickListener(menuItemListener);
         mMenuRanking.setOnClickListener(menuItemListener);
+        mMenuLogin.setOnClickListener(menuItemListener);
     }
 
     // set up fragment
