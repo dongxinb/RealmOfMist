@@ -26,6 +26,8 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import edu.zju.realmofmist.R;
+import edu.zju.realmofmist.model.LocationModel;
+import edu.zju.realmofmist.model.LocationStorageModel;
 import edu.zju.realmofmist.view.MyMapView;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener,
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuRanking;
     FloatingActionButton mMenuLogin;
 
+    private LocationStorageModel mLocationStorage;
+
     private MyMapView mMapView;
     private GoogleApiClient mGoogleApiClient;
 
@@ -43,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private boolean mRequestingLocationUpdates = true;
     private boolean mMoveToCurPos = false;
-    private Location mCurrentLocation;
+
+    private LocationModel mCurrentLocation;
     private String mLastUpdateTime;
     private LocationRequest mLocationRequest;
 
@@ -64,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.getMapAsync(this);
+
+        mLocationStorage = new LocationStorageModel();
         buildGoogleApiClient();
         createLocationRequest();
     }
@@ -199,21 +206,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onLocationChanged(Location location) {
-        mCurrentLocation = location;
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
 
-        double currentLatitude = mCurrentLocation.getLatitude();
-        double currentLongitude = mCurrentLocation.getLongitude();
+        mCurrentLocation = new LocationModel(currentLatitude, currentLongitude, DateFormat.getTimeInstance().format(new Date()));
 
-        LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+        mLocationStorage.insertLocation(mCurrentLocation);
 
         if (mMap != null && mMoveToCurPos == false) {
+            LatLng latLng = new LatLng(currentLatitude, currentLongitude);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
             mMap.animateCamera(cameraUpdate);
             mMoveToCurPos = true;
         }
 
-        Log.d("Locations", "La: " + currentLatitude + " Lo: " + currentLongitude + " TIME: " + mLastUpdateTime);
+        Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
     }
 
     @Override
@@ -225,6 +232,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setMyLocationEnabled(true);
         mMap = googleMap;
-        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
     }
 }
