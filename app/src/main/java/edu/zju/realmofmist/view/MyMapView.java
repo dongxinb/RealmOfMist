@@ -35,7 +35,7 @@ public class MyMapView extends MapView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Canvas canvas1 = new Canvas();
+        //Canvas canvas1 = new Canvas();
 
         Paint clearAwayPaint = new Paint();
         clearAwayPaint.setStyle(Paint.Style.FILL);

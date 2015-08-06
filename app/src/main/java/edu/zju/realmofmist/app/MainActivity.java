@@ -12,7 +12,6 @@ import android.view.View;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -20,9 +19,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -45,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
 
     private boolean mRequestingLocationUpdates = true;
+    private boolean mMoveToCurPos = false;
     private Location mCurrentLocation;
     private String mLastUpdateTime;
     private LocationRequest mLocationRequest;
@@ -199,6 +196,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         double currentLatitude = mCurrentLocation.getLatitude();
         double currentLongitude = mCurrentLocation.getLongitude();
+
+        LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+
+        if (mMap != null && mMoveToCurPos == false) {
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            mMap.animateCamera(cameraUpdate);
+            mMoveToCurPos = true;
+        }
 
         Log.d("MyDebug", "La: " + currentLatitude + " Lo: " + currentLongitude + " TIME: " + mLastUpdateTime);
     }
