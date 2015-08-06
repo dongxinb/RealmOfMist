@@ -67,6 +67,15 @@
                 fab:fab_size="mini"
                 fab:fab_colorPressed="@color/main"/>
 
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/menu_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/white"
+                fab:fab_title="Login"
+                fab:fab_size="mini"
+                fab:fab_colorPressed="@color/main"/>
+
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     </RelativeLayout>
