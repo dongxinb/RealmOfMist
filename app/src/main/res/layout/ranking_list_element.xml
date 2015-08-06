@@ -4,14 +4,16 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="XingbaoDong"
         android:id="@+id/name"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="15dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="0dp"
+        android:layout_alignParentBottom="true"
+        android:minHeight="0dp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,12 +30,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="111"
+        android:text="1"
         android:id="@+id/ranking"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="37dp"
         android:layout_alignTop="@+id/area"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/name" />
+        android:layout_alignBottom="@+id/name"
+        android:textStyle="bold" />
 </RelativeLayout>

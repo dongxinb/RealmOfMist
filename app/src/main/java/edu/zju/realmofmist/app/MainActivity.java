@@ -109,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 if (v == mMenuProfile) {
+                    //Should change to PorfileActivity
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivityForResult(intent, 1000);
                     Log.d("Main", "Profile menu pressed.");
                 }else if (v == mMenuRanking) {
                     Intent intent = new Intent(MainActivity.this, RankingActivity.class);
