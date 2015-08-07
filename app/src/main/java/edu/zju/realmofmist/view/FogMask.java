@@ -14,11 +14,20 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.google.android.gms.maps.GoogleMap;
+
+import java.util.List;
+
+import edu.zju.realmofmist.model.LocationModel;
+
 /**
  * Created by desolate on 15/8/6.
  */
 public class FogMask extends SurfaceView implements SurfaceHolder.Callback {
 
+    Paint paint, mPaint;
+    List<LocationModel> locationStorage;
+    GoogleMap map;
 
     public FogMask(Context context) {
         super(context);
@@ -35,6 +44,17 @@ public class FogMask extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
         Log.d("FogMask", "context attr");
         setWillNotDraw(false);
+
+        paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(0xddbbbbbb);
+        paint.setAlpha(190);
+
+        mPaint = new Paint();
+        mPaint.setAlpha(0);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mPaint.setAntiAlias(true);
+
     }
 
     @Override
@@ -52,21 +72,35 @@ public class FogMask extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    public void setMap(GoogleMap MAP) {
+        map = MAP;
+    }
+
+    public void setLocationStorage(List<LocationModel> ls) {
+        locationStorage = ls;
+    }
+
+    int j = 0;
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.d("FogMask", "onDraw()");
-//        Paint paint = new Paint();
-//        paint.setStyle(Paint.Style.FILL);
-//        paint.setColor(0xffbbbbbb);
-//        paint.setAlpha(150);
-//        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
-
-//        Paint mPaint = new Paint();
-//        mPaint.setAlpha(0);
-//        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-//        mPaint.setAntiAlias(true);
-//        canvas.drawCircle(10, 10, 40, mPaint);
+        if (canvas == null) {
+            return;
+        }
+        Path path = new Path();
+        int size = 0;
+        if (locationStorage != null)
+            size = locationStorage.size();
+        if (size > 0 && map != null) {
+            Log.d("DoDraw", j + " 1");
+            for (int i = 0; i < size; i++) {
+                android.graphics.Point point = map.getProjection().toScreenLocation(locationStorage.get(i).toLatLng());
+                Log.d("MYMAP", i+ " " +point.toString());
+                path.addCircle(point.x, point.y, 40, Path.Direction.CW);
+            }
+        }
+        canvas.drawPath(path, mPaint);
     }
 
     private void doDraw() {
