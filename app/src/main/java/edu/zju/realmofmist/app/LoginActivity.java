@@ -2,9 +2,17 @@ package edu.zju.realmofmist.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
+
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 import edu.zju.realmofmist.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -13,6 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //linkView();
+
     }
 
 
@@ -37,4 +47,5 @@ public class LoginActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

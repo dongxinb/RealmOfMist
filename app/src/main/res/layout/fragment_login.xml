@@ -12,22 +12,22 @@
         android:inputType="textPersonName"
         android:hint="Enter Phone Number"
         android:ems="10"
-        android:id="@+id/PhoneNumText"
+        android:id="@+id/phoneNumberText"
         android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/signInButton"
         android:layout_alignStart="@+id/signInButton"
         android:textColor="@color/status_color"
-        android:layout_toLeftOf="@+id/GetCaptchaButton"
-        android:layout_toStartOf="@+id/GetCaptchaButton"
+        android:layout_toLeftOf="@+id/getCaptchaButton"
+        android:layout_toStartOf="@+id/getCaptchaButton"
         android:layout_marginRight="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/areaCodeText"
-        android:layout_alignTop="@+id/PhoneNumText"
-        android:layout_alignBottom="@+id/PhoneNumText"
+        android:layout_alignTop="@+id/phoneNumberText"
+        android:layout_alignBottom="@+id/phoneNumberText"
         android:layout_alignRight="@+id/signInButton"
         android:hint="AREA CODE"
         android:textSize="14dp"
@@ -41,26 +41,26 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/CapText"
-        android:layout_alignLeft="@+id/PhoneNumText"
-        android:layout_alignStart="@+id/PhoneNumText"
-        android:layout_toStartOf="@+id/GetCaptchaButton"
+        android:id="@+id/capText"
+        android:layout_alignLeft="@+id/phoneNumberText"
+        android:layout_alignStart="@+id/phoneNumberText"
+        android:layout_toStartOf="@+id/getCaptchaButton"
         android:hint="Enter Captcha"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/PhoneNumText"
+        android:layout_below="@+id/phoneNumberText"
         android:textColor="@color/status_color"
-        android:layout_alignRight="@+id/PhoneNumText"
-        android:layout_alignEnd="@+id/PhoneNumText" />
+        android:layout_alignRight="@+id/phoneNumberText"
+        android:layout_alignEnd="@+id/phoneNumberText" />
 
     <com.gc.materialdesign.views.ButtonFlat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/GetCaptchaButton"
+        android:id="@+id/getCaptchaButton"
         android:background="@color/status_color"
         android:text="Captcha"
         android:layout_alignRight="@+id/signInButton"
-        android:layout_alignTop="@+id/CapText"
-        android:layout_alignBottom="@+id/CapText" />
+        android:layout_alignTop="@+id/capText"
+        android:layout_alignBottom="@+id/capText" />
 
     <com.gc.materialdesign.views.ButtonRectangle
         android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_below="@+id/CapText"
+        android:layout_below="@+id/capText"
         android:layout_marginTop="45dp" />
 
 </RelativeLayout>
