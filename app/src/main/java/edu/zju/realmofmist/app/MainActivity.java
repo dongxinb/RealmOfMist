@@ -25,11 +25,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 import edu.zju.realmofmist.R;
+import edu.zju.realmofmist.util.FogTileProvider;
 import edu.zju.realmofmist.view.FogMask2;
 import edu.zju.realmofmist.model.LocationModel;
 import edu.zju.realmofmist.model.LocationStorageModel;
@@ -65,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // Bool to track whether the app is already resolving an error
     private boolean mResolvingError = false;
 
+    private FogTileProvider mTileProvider;
+    private TileOverlay mTileoverlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         linkView();
         setMapView();
 
-        addPreDrawListener();
+//        addPreDrawListener();
 
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -254,6 +261,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mMap != null)
             Log.d("MYMAP", mMap.getCameraPosition().toString() + " " + mMap.getMaxZoomLevel() + " " + mMap.getMinZoomLevel());
         Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
+
+        if (mTileProvider != null) {
+            mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
+            mTileoverlay.clearTileCache();
+        }
     }
 
     @Override
@@ -267,11 +279,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
-        LatLng Singapore = new LatLng(1.358557, 103.838171);
+//        LatLng Singapore = new LatLng(1.358557, 103.838171);
 
-        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.mist))
-                .position(Singapore, 60000f, 45000f);
-        mMap.addGroundOverlay(newarkMap);
+//        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+//                .image(BitmapDescriptorFactory.fromResource(R.drawable.mist))
+//                .position(Singapore, 60000f, 45000f);
+//        mMap.addGroundOverlay(newarkMap);
+
+        mTileProvider = new FogTileProvider(mMap);
+        mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
+        TileOverlayOptions opts = new TileOverlayOptions();
+        opts.fadeIn(true);
+        opts.tileProvider(mTileProvider);
+        mTileoverlay = mMap.addTileOverlay(opts);
     }
+
+
 }
