@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LocationRequest mLocationRequest;
 
     private Bitmap mMistBitmap;
+    private Canvas mMistCanvas;
     private Paint mPaint;
     private GroundOverlay mImageOverlay;
 
@@ -231,7 +232,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setMistBitmap() {
         Bitmap mistOrign = BitmapFactory.decodeResource(getResources(), R.drawable.mist);
         mMistBitmap = mistOrign.copy(Bitmap.Config.ARGB_8888, true);
-        Log.d("MyDebug", "setMistBit");
+        mMistCanvas = new Canvas(mMistBitmap);
+
         LatLng Singapore = new LatLng(1.358557, 103.838171);
         GroundOverlayOptions newarkMap = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromBitmap(mMistBitmap))
@@ -319,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMoveToCurPos = true;
         }
         if (mMap != null) {
-            mapProcess();
+            mapProcess(mLocationStorage.getLocation(mLocationStorage.getSize()-1));
             mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
         }
         Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
@@ -341,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
+        // set mist bitmap
         if (mSetMist == false) {
             setMistBitmap();
             mSetMist = true;
@@ -362,9 +365,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void mapProcess() {
-        Canvas canvas = new Canvas(mMistBitmap);
-        canvas.drawCircle(-distLng(mCurrentLocation.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(mCurrentLocation.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 2, mPaint);
+    private void mapProcess(LocationModel location) {
+        mMistCanvas.drawCircle(-distLng(location.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(location.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 1, mPaint);
     }
 
     private float distLat(double lat1, double lat2) {
