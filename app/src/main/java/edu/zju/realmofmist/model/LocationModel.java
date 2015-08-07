@@ -36,6 +36,10 @@ public class LocationModel {
         return longitude;
     }
 
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
     public boolean isEqual(LocationModel otherLocation) {
         double error = Math.pow(10, -errorDegree);
 //        Log.d("Locations", error+"");
