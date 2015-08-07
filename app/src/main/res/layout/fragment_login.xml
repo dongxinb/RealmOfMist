@@ -10,48 +10,74 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Enter Phone Number"
+        android:hint="Enter Phone Number"
         android:ems="10"
-        android:id="@+id/UserIdText"
-        android:layout_marginTop="114dp"
+        android:id="@+id/PhoneNumText"
+        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/signInButton"
+        android:layout_alignStart="@+id/signInButton"
+        android:textColor="@color/status_color"
+        android:layout_toLeftOf="@+id/GetCaptchaButton"
+        android:layout_toStartOf="@+id/GetCaptchaButton"
+        android:layout_marginRight="10dp" />
 
-    <com.gc.materialdesign.views.ButtonRectangle
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/view2"
-        android:background="@color/status_color"
-        android:text="Sign In"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="120dp"
-        android:layout_alignLeft="@+id/UserIdText"
-        android:layout_alignRight="@+id/UserIdText" />
-
-    <com.gc.materialdesign.views.ButtonFlat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/GetCaptchaButton"
-        android:background="@color/status_color"
-        android:text="Get Cap"
-        android:layout_alignRight="@+id/UserIdText"
-        android:layout_alignEnd="@+id/UserIdText"
-        android:layout_alignTop="@+id/editText"
-        android:layout_alignBottom="@+id/editText" />
+        android:id="@+id/areaCodeText"
+        android:layout_alignTop="@+id/PhoneNumText"
+        android:layout_alignBottom="@+id/PhoneNumText"
+        android:layout_alignRight="@+id/signInButton"
+        android:hint="AREA CODE"
+        android:textSize="14dp"
+        android:selectAllOnFocus="false"
+        android:password="false"
+        android:gravity="center"
+        android:textColor="@color/status_color"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
-        android:layout_alignTop="@+id/UserIdText"
-        android:layout_alignLeft="@+id/UserIdText"
-        android:layout_alignStart="@+id/UserIdText"
-        android:layout_toLeftOf="@+id/GetCaptchaButton"
+        android:id="@+id/CapText"
+        android:layout_alignLeft="@+id/PhoneNumText"
+        android:layout_alignStart="@+id/PhoneNumText"
         android:layout_toStartOf="@+id/GetCaptchaButton"
-        android:text="Enter Cap"
-        android:layout_marginTop="100dp" />
+        android:hint="Enter Captcha"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/PhoneNumText"
+        android:textColor="@color/status_color"
+        android:layout_alignRight="@+id/PhoneNumText"
+        android:layout_alignEnd="@+id/PhoneNumText" />
+
+    <com.gc.materialdesign.views.ButtonFlat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/GetCaptchaButton"
+        android:background="@color/status_color"
+        android:text="Captcha"
+        android:layout_alignRight="@+id/signInButton"
+        android:layout_alignTop="@+id/CapText"
+        android:layout_alignBottom="@+id/CapText" />
+
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signInButton"
+        android:background="@color/status_color"
+        android:text="Sign In"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/CapText"
+        android:layout_marginTop="45dp" />
 
 </RelativeLayout>
