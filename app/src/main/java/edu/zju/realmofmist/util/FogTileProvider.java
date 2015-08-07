@@ -30,6 +30,7 @@ public class FogTileProvider implements TileProvider {
     Paint mKeepPaint, mClearPaint;
     List<LocationModel> mLocationStorage = null;
 //    Bitmap mMask;
+    int mLength = 40;
 
     public FogTileProvider(GoogleMap map) {
         this.mMap = map;
@@ -48,22 +49,22 @@ public class FogTileProvider implements TileProvider {
     @Override
     public Tile getTile(int x, int y, int zoom) {
         Log.d("FogTileProvider", String.format("%d %d %d", x, y, zoom));
-        Bitmap mMask = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
+        Bitmap mMask = Bitmap.createBitmap(mLength, mLength, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mMask);
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), mKeepPaint);
 
         LatLngBounds bounds = boundsOfTile(x, y, zoom);
         double thisTileWidth = bounds.northeast.longitude - bounds.southwest.longitude;
         double thisTileHeight = bounds.northeast.latitude - bounds.southwest.latitude;
-        float radius = (float) (0.0004 * (float) 256 / thisTileWidth);
+        float radius = (float) (0.0004 * (float) mLength / thisTileWidth);
 //        canvas.drawCircle(100, 100, 20, mClearPaint);
         if (mLocationStorage != null) {
             Path path = new Path();
             for (LocationModel location: mLocationStorage) {
                 if (location.getLongitude() < bounds.northeast.longitude + 0.01 && location.getLongitude() > bounds.southwest.longitude - 0.01 &&
                         location.getLatitude() < bounds.northeast.latitude + 0.01 && location.getLatitude() > bounds.southwest.latitude - 0.01) {
-                    path.addCircle((float)(((location.getLongitude() - bounds.southwest.longitude) / thisTileWidth) * 256),
-                            (float)(256 - (((location.getLatitude() - bounds.southwest.latitude) / thisTileHeight) * 256)), radius, Path.Direction.CW);
+                    path.addCircle((float)(((location.getLongitude() - bounds.southwest.longitude) / thisTileWidth) * mLength),
+                            (float)(mLength - (((location.getLatitude() - bounds.southwest.latitude) / thisTileHeight) * mLength)), radius, Path.Direction.CW);
                 }
 
             }
@@ -72,7 +73,7 @@ public class FogTileProvider implements TileProvider {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         mMask.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        Tile tile = new Tile(256, 256, stream.toByteArray());
+        Tile tile = new Tile(mLength, mLength, stream.toByteArray());
         return tile;
 //        return null;
     }
