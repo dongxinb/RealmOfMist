@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -27,25 +26,19 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.TileOverlay;
-import com.google.android.gms.maps.model.TileOverlayOptions;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 import edu.zju.realmofmist.R;
 import edu.zju.realmofmist.util.FogTileProvider;
-import edu.zju.realmofmist.view.FogMask2;
 import edu.zju.realmofmist.model.LocationModel;
 import edu.zju.realmofmist.model.LocationStorageModel;
 import edu.zju.realmofmist.view.MyMapView;
@@ -57,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuProfile;
     FloatingActionButton mMenuRanking;
     FloatingActionButton mMenuLogin;
-//    FogMask2 mMaskView;
 
     public static float MistSize = 60000f;
     public static float ImageSize = 637 * 2f;
@@ -183,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMenuProfile = (FloatingActionButton)findViewById(R.id.menu_profile);
         mMenuRanking = (FloatingActionButton)findViewById(R.id.menu_ranking);
         mMenuLogin = (FloatingActionButton)findViewById(R.id.menu_login);
-//        mMaskView = (FogMask2)findViewById(R.id.mask_view);
 
         View.OnClickListener menuItemListener = new View.OnClickListener() {
             @Override
