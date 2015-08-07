@@ -18,6 +18,10 @@ public class LocationStorageModel {
         return locationList.size();
     }
 
+    public List<LocationModel> getLocationList() {
+        return locationList;
+    }
+
     public LocationModel getLocation(int position) {
         return locationList.get(position);
     }

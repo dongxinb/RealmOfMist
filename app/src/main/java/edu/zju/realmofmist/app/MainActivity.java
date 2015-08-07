@@ -238,14 +238,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mCurrentLocation = new LocationModel(currentLatitude, currentLongitude, DateFormat.getTimeInstance().format(new Date()));
 
         mLocationStorage.insertLocation(mCurrentLocation);
+        mMaskView.setLocationStorage(mLocationStorage.getLocationList());
 
+        // move to current location when starting
         if (mMap != null && mMoveToCurPos == false) {
             LatLng latLng = new LatLng(currentLatitude, currentLongitude);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
             mMap.animateCamera(cameraUpdate);
             mMoveToCurPos = true;
         }
-
+//        if (mMap != null)
+//            Log.d("MYMAP", mMap.getCameraPosition().toString() + " " + mMap.getMaxZoomLevel() + " " + mMap.getMinZoomLevel());
         Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
     }
 
@@ -259,5 +262,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.setMyLocationEnabled(true);
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+        mMaskView.setMap(mMap);
     }
 }

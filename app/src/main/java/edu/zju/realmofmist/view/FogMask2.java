@@ -14,6 +14,12 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
+import com.google.android.gms.maps.GoogleMap;
+
+import java.util.List;
+
+import edu.zju.realmofmist.model.LocationModel;
+
 /**
  * Created by desolate on 15/8/6.
  */
@@ -22,6 +28,9 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
     boolean available = false;
 
     Paint paint, mPaint;
+
+    List<LocationModel> locationStorage;
+    GoogleMap map;
 
     public FogMask2(Context context) {
         super(context);
@@ -71,6 +80,18 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
 
     }
 
+    public void setLocationStorage(List<LocationModel> ls) {
+        locationStorage = ls;
+    }
+
+    public void setMap(GoogleMap MAP) {
+        map = MAP;
+    }
+
+    public void addPathCircle(Path path, LocationModel location) {
+
+    }
+
     public void doDraw() {
         if (!available) {
             return ;
@@ -93,13 +114,23 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
             }
             canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
             Path path = new Path();
-            for (int i = 0; i < 100; i ++) {
-                path.addCircle(100+i*2, 100 + i, 20, Path.Direction.CW);
+//            for (int i = 0; i < 100; i ++) {
+//                path.addCircle(100+i*2, 100 + i, 20, Path.Direction.CW);
+//            }
+//            for (int i = 0; i < 100; i ++) {
+//                path.addCircle(400+i*2, 200 + i * 3, 10, Path.Direction.CW);
+//            }
+//            path.addCircle(300, 300, 40, Path.Direction.CW);
+
+            int size = locationStorage.size();
+            if (size > 0 && map != null) {
+                for (int i = 0; i < size; i++) {
+                    android.graphics.Point point = map.getProjection().toScreenLocation(locationStorage.get(i).toLatLng());
+                    Log.d("MYMAP", point.toString());
+                    path.addCircle(point.x, point.y, 40, Path.Direction.CW);
+                }
             }
-            for (int i = 0; i < 100; i ++) {
-                path.addCircle(400+i*2, 200 + i * 3, 10, Path.Direction.CW);
-            }
-            path.addCircle(300, 300, 40, Path.Direction.CW);
+
             canvas.drawPath(path, mPaint);
             try {
                 surface.unlockCanvasAndPost(canvas);

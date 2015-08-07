@@ -2,6 +2,8 @@ package edu.zju.realmofmist.model;
 
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by desolate on 15/8/5.
  */
@@ -41,6 +43,11 @@ public class LocationModel {
             return true;
         else
             return false;
+    }
+
+    public LatLng toLatLng() {
+        LatLng latLng = new LatLng(latitude, longitude);
+        return latLng;
     }
 
     @Override
