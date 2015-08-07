@@ -9,7 +9,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         android:hint="Enter Phone Number"
         android:ems="10"
         android:id="@+id/phoneNumberText"
@@ -25,6 +25,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:inputType="phone"
         android:id="@+id/areaCodeText"
         android:layout_alignTop="@+id/phoneNumberText"
         android:layout_alignBottom="@+id/phoneNumberText"
@@ -79,5 +80,6 @@
         android:layout_marginRight="20dp"
         android:layout_below="@+id/capText"
         android:layout_marginTop="45dp" />
+
 
 </RelativeLayout>

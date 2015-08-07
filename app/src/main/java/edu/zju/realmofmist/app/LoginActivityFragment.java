@@ -1,6 +1,9 @@
 package edu.zju.realmofmist.app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,11 @@ import android.widget.EditText;
 
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
+
+import java.util.Timer;
+import java.util.TimerTask;
+//import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -29,6 +37,22 @@ public class LoginActivityFragment extends Fragment {
     String mAreaCode;//区域代码
     String mPhoneNumber;//手机号
     String mCaptchaNumber;//验证码
+    Timer mcapTimer;
+    Handler timeHandler = new Handler() {
+
+        public void handleMessage(Message timeMsg){
+            if (timeMsg.what > 0){
+                //Integer time = timeMsg.what;
+                mGetCapButton.setBackgroundColor(0xff189176);
+                mGetCapButton.setText(Integer.toString(timeMsg.what)+"s");
+            }
+            else {
+                mGetCapButton.setEnabled(true);
+                mGetCapButton.setText("CAPTCHA");
+                mcapTimer.cancel();
+            }
+        }
+    };
 
 
     public LoginActivityFragment() {
@@ -80,6 +104,19 @@ public class LoginActivityFragment extends Fragment {
         mGetCapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mGetCapButton.setEnabled(false);
+                mcapTimer = new Timer();
+                mcapTimer.schedule(new TimerTask() {
+                    int waitTime = 60;
+
+                    @Override
+                    public void run() {
+                        Message timerMsg = new Message();
+                        timerMsg.what = waitTime--;
+                        timeHandler.sendMessage(timerMsg);
+                    }
+                }, 100, 1000);
+
                 mAreaCode = mAreaCodeText.getText().toString();
                 mPhoneNumber = mPhoneText.getText().toString();
                 if ((!mAreaCode.isEmpty())&&(!mPhoneNumber.isEmpty())){
