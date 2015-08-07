@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mCurrentLocation = new LocationModel(currentLatitude, currentLongitude, DateFormat.getTimeInstance().format(new Date()));
 
-        mLocationStorage.insertLocation(mCurrentLocation);
+        boolean res = mLocationStorage.insertLocation(mCurrentLocation);
 //        mMaskView.setLocationStorage(mLocationStorage.getLocationList());
 
         // move to current location when starting
@@ -331,10 +331,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMoveToCurPos = true;
         }
         if (mMap != null) {
-            mapProcess(mLocationStorage.getLocation(mLocationStorage.getSize()-1));
-            mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
+            if (res == true) {
+                mapProcess(mLocationStorage.getLocation(mLocationStorage.getSize() - 1));
+                mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
+            }
         }
-        Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
+
 
 //        if (mTileProvider != null) {
 //            mTileProvider.setLocationStorage(mLocationStorage.getLocationList());

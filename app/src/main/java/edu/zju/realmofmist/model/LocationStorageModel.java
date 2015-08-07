@@ -35,33 +35,23 @@ public class LocationStorageModel {
         return locationList.get(position);
     }
 
-    public void insertLocation(double latitude, double longitude, String updateTime) {
-        int size = locationList.size();
-        LocationModel newLocation = new LocationModel(latitude, longitude, updateTime);
-
-        for (int i = 0; i < size; i++) {
-            if (locationList.get(i).isEqual(newLocation) == true) {
-                return;
-            }else {
-                Locations locations = new Locations(latitude, longitude);
-                locations.save();
-            }
+    public boolean insertLocation(LocationModel newLocation) {
+        if (!existIn(newLocation)) {
+            Locations locations = new Locations(newLocation.getLatitude(), newLocation.getLongitude());
+            locations.save();
+            Log.d("LocationStorageModel", String.format("Save: %f %f", newLocation.getLongitude(), newLocation.getLongitude()));
+            locationList.add(newLocation);
+            return true;
         }
-
-        locationList.add(newLocation);
+        return false;
     }
 
-    public void insertLocation(LocationModel newLocation) {
-        int size = locationList.size();
-        for (int i = 0; i < size; i++) {
-            if (locationList.get(i).isEqual(newLocation) == true) {
-                return ;
-            }else {
-                Locations locations = new Locations(newLocation.getLatitude(), newLocation.getLongitude());
-                locations.save();
+    private boolean existIn(LocationModel newLocation) {
+        for (LocationModel ll: locationList) {
+            if (ll.isEqual(newLocation)) {
+                return true;
             }
         }
-
-        locationList.add(newLocation);
+        return false;
     }
 }
