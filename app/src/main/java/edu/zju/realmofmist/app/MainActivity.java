@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuLogin;
 
     public static float MistSize = 60000f;
-    public static float ImageSize = 637 * 2f;
+    public float ImageSize = 637;
 
     private LocationStorageModel mLocationStorage;
 
@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("MyDebug", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageSize = 637 * getResources().getDisplayMetrics().density;
 
         linkView();
         setMapView();
@@ -224,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // set up fragment
     private void setMapView() {
         mMapView = (MyMapView) findViewById(R.id.mapView);
-        Log.d("MAPVIEW", mMapView.toString() + " 1");
     }
 
     private void setMistBitmap() {
@@ -330,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-
 //        if (mTileProvider != null) {
 //            mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
 //            mTileoverlay.clearTileCache();
@@ -372,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void mapProcess(LocationModel location) {
+//        mMistCanvas.drawCircle(ImageSize / 2, ImageSize / 2, 20, mPaint);
         mMistCanvas.drawCircle(-distLng(location.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(location.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 1, mPaint);
     }
 
