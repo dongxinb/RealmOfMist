@@ -58,7 +58,8 @@
 
         <activity
             android:name=".app.ProfileActivity"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait">
         </activity>
 
 
