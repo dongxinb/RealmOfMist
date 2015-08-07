@@ -92,6 +92,7 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
 
     }
 
+    int j = 0;
     public void doDraw() {
         if (!available) {
             return ;
@@ -107,31 +108,28 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
         }
         Rect dirty = new Rect(0, getHeight(), getWidth(), getHeight());
         try {
+            Log.d("DoDraw", (j++) + "");
             Canvas canvas = surface.lockCanvas(dirty);
             if (canvas == null) {
                 surface.release();
                 return;
             }
             canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
-            Path path = new Path();
-//            for (int i = 0; i < 100; i ++) {
-//                path.addCircle(100+i*2, 100 + i, 20, Path.Direction.CW);
-//            }
-//            for (int i = 0; i < 100; i ++) {
-//                path.addCircle(400+i*2, 200 + i * 3, 10, Path.Direction.CW);
-//            }
-//            path.addCircle(300, 300, 40, Path.Direction.CW);
 
-            int size = locationStorage.size();
+            Path path = new Path();
+            int size = 0;
+            if (locationStorage != null)
+                size = locationStorage.size();
             if (size > 0 && map != null) {
+                Log.d("DoDraw", j + " 1");
                 for (int i = 0; i < size; i++) {
                     android.graphics.Point point = map.getProjection().toScreenLocation(locationStorage.get(i).toLatLng());
-                    Log.d("MYMAP", point.toString());
+                    Log.d("MYMAP", i+ " " +point.toString());
                     path.addCircle(point.x, point.y, 40, Path.Direction.CW);
                 }
             }
-
             canvas.drawPath(path, mPaint);
+
             try {
                 surface.unlockCanvasAndPost(canvas);
             } catch (IllegalArgumentException iae) {
@@ -141,31 +139,63 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
         }catch (Exception e) {
 
         }
+    }
 
+    public void doDrawPath() {
+        if (!available) {
+            return ;
+        }
+        Canvas canvas = lockCanvas();
+        if (canvas == null) {
+            return;
+        }
+        Path path = new Path();
+        int size = 0;
+        if (locationStorage != null)
+            size = locationStorage.size();
+        if (size > 0 && map != null) {
+            Log.d("DoDraw", j + " 1");
+            for (int i = 0; i < size; i++) {
+                android.graphics.Point point = map.getProjection().toScreenLocation(locationStorage.get(i).toLatLng());
+                Log.d("MYMAP", i+ " " +point.toString());
+                path.addCircle(point.x, point.y, 40, Path.Direction.CW);
+            }
+        }
+        canvas.drawPath(path, mPaint);
+        unlockCanvasAndPost(canvas);
+    }
 
-//        Canvas canvas= lockCanvas();
-//        Paint paint = new Paint();
-//        paint.setStyle(Paint.Style.FILL);
-//        paint.setColor(0xffbbbbbb);
-//        paint.setAlpha(190);
-//        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
-//
-//        Paint mPaint = new Paint();
-//        mPaint.setAlpha(0);
-//        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-//        mPaint.setAntiAlias(true);
-//        Path path = new Path();
-//        for (int i = 0; i < 100; i ++) {
-//            path.addCircle(100+i*2, 100 + i, 20, Path.Direction.CW);
-//        }
-//        for (int i = 0; i < 100; i ++) {
-//            path.addCircle(400+i*2, 200 + i * 3, 10, Path.Direction.CW);
-//        }
-////        path.moveTo(100, 100);
-////        path.arcTo(100, 100, 200, 100, (float)Math.PI / 6, (float)Math.PI * 5/ 6, true);
-//        path.addCircle(300, 300, 40, Path.Direction.CW);
-//        canvas.drawPath(path, mPaint);
-//
-//        unlockCanvasAndPost(canvas);
+    public void doDraw2() {
+        Canvas canvas= lockCanvas();
+        if (canvas == null) {
+            return;
+        }
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(0xffbbbbbb);
+        paint.setAlpha(19);
+        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
+
+        Paint mPaint = new Paint();
+        mPaint.setAlpha(0);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mPaint.setAntiAlias(true);
+        Path path = new Path();
+
+        int size = 0;
+        if (locationStorage != null)
+            size = locationStorage.size();
+
+        if (size > 0 && map != null) {
+            Log.d("DoDraw", (j) + " 2");
+            for (int i = 0; i < size; i++) {
+                android.graphics.Point point = map.getProjection().toScreenLocation(locationStorage.get(i).toLatLng());
+                Log.d("MYMAP", i+ " " +point.toString());
+                path.addCircle(point.x, point.y, 40, Path.Direction.CW);
+            }
+        }
+
+        canvas.drawPath(path, mPaint);
+        unlockCanvasAndPost(canvas);
     }
 }

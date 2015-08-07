@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("Camera", String.format("%f %s", position.zoom, position.target.toString()));
         mMaskView.setMap(mMap);
         mMaskView.doDraw();
-        System.out.println(mMap.getCameraPosition());
+        mMaskView.doDrawPath();
+//        System.out.println(mMap.getCameraPosition());
         return true;
     }
 
