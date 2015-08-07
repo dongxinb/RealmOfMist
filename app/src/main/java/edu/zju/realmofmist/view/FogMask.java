@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -57,21 +58,6 @@ public class FogMask extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        doDraw();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-
-    }
-
     public void setMap(GoogleMap MAP) {
         map = MAP;
     }
@@ -103,32 +89,47 @@ public class FogMask extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawPath(path, mPaint);
     }
 
-    private void doDraw() {
-        Canvas canvas=getHolder().lockCanvas();
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(0xffbbbbbb);
-        paint.setAlpha(150);
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
 
-        Paint mPaint = new Paint();
-        mPaint.setAlpha(0);
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        mPaint.setAntiAlias(true);
-        Path path = new Path();
-        for (int i = 0; i < 100; i ++) {
-            path.addCircle(100+i*2, 100 + i, 20, Path.Direction.CW);
-        }
-        for (int i = 0; i < 100; i ++) {
-            path.addCircle(400+i*2, 200 + i * 3, 10, Path.Direction.CW);
-        }
-//        path.moveTo(100, 100);
-//        path.arcTo(100, 100, 200, 100, (float)Math.PI / 6, (float)Math.PI * 5/ 6, true);
-        path.addCircle(300, 300, 40, Path.Direction.CW);
-        canvas.drawPath(path, mPaint);
-
-        getHolder().unlockCanvasAndPost(canvas);
-        Log.d("FogMask", "doDraw()");
-        invalidate();
     }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
+//    private void doDraw() {
+//        Canvas canvas=getHolder().lockCanvas();
+//        Paint paint = new Paint();
+//        paint.setStyle(Paint.Style.FILL);
+//        paint.setColor(0xffbbbbbb);
+//        paint.setAlpha(150);
+//        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
+//
+//        Paint mPaint = new Paint();
+//        mPaint.setAlpha(0);
+//        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+//        mPaint.setAntiAlias(true);
+//        Path path = new Path();
+//        for (int i = 0; i < 100; i ++) {
+//            path.addCircle(100+i*2, 100 + i, 20, Path.Direction.CW);
+//        }
+//        for (int i = 0; i < 100; i ++) {
+//            path.addCircle(400+i*2, 200 + i * 3, 10, Path.Direction.CW);
+//        }
+////        path.moveTo(100, 100);
+////        path.arcTo(100, 100, 200, 100, (float)Math.PI / 6, (float)Math.PI * 5/ 6, true);
+//        path.addCircle(300, 300, 40, Path.Direction.CW);
+//        canvas.drawPath(path, mPaint);
+//
+//        getHolder().unlockCanvasAndPost(canvas);
+//        Log.d("FogMask", "doDraw()");
+//        invalidate();
+//    }
 }
