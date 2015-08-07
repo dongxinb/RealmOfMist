@@ -39,10 +39,12 @@ public class LocationModel {
     public boolean isEqual(LocationModel otherLocation) {
         double error = Math.pow(10, -errorDegree);
 //        Log.d("Locations", error+"");
-        if (Math.abs(latitude - otherLocation.getLatitude()) < error && Math.abs(longitude - otherLocation.getLongitude()) < error)
+        if (Math.sqrt((latitude - otherLocation.getLatitude()) * (latitude - otherLocation.getLatitude()) +(longitude - otherLocation.getLongitude())*(longitude - otherLocation.getLongitude())) < error) {
             return true;
-        else
+        }else {
             return false;
+        }
+
     }
 
     public LatLng toLatLng() {

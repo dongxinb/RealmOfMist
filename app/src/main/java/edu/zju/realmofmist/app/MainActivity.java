@@ -239,6 +239,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .image(BitmapDescriptorFactory.fromBitmap(mMistBitmap))
                 .position(Singapore, MistSize, MistSize);
         mImageOverlay = mMap.addGroundOverlay(newarkMap);
+
+        
     }
 
     // set up google play service

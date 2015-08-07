@@ -21,6 +21,8 @@ android {
 
 repositories {
     jcenter()
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 
@@ -32,4 +34,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile files('libs/android-async-http-1.4.8.jar')
     compile project(":smssdk")
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }
