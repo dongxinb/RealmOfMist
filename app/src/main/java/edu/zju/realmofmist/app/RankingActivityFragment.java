@@ -2,6 +2,7 @@ package edu.zju.realmofmist.app;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,10 @@ import android.widget.ListView;
 
 import edu.zju.realmofmist.R;
 import edu.zju.realmofmist.adapter.RankingListAdapter;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -16,7 +21,8 @@ import edu.zju.realmofmist.adapter.RankingListAdapter;
 public class RankingActivityFragment extends Fragment {
 
     private ListView mRankingListView;
-    private RankingListAdapter adapter;
+    private RankingListAdapter mAdapter;
+    private PtrClassicFrameLayout mPtrFrame;
 
     public RankingActivityFragment() {
     }
@@ -28,7 +34,7 @@ public class RankingActivityFragment extends Fragment {
 
         linkGUI2Val(rootView);
         populateList();
-
+        setPtrFrame(rootView);
         return rootView;
     }
 
@@ -44,9 +50,50 @@ public class RankingActivityFragment extends Fragment {
 
         //ListElementAdapter.initialzePretendData(getActivity().getAssets());
 
-        adapter = new RankingListAdapter();
+        mAdapter = new RankingListAdapter();
 
-        mRankingListView.setAdapter(adapter);
+        mRankingListView.setAdapter(mAdapter);
+    }
+
+    private void setPtrFrame(View rootView){
+        mPtrFrame = (PtrClassicFrameLayout) rootView.findViewById(R.id.rotate_header_list_view_frame);
+        mPtrFrame.setLastUpdateTimeRelateObject(this);
+        mPtrFrame.setPtrHandler(new PtrHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateData();
+                    }
+                }, 1800);
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+        });
+        // the following are default settings
+        mPtrFrame.setResistance(1.7f);
+        mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
+        mPtrFrame.setDurationToClose(200);
+        mPtrFrame.setDurationToCloseHeader(1000);
+        // default is false
+        mPtrFrame.setPullToRefresh(false);
+        // default is true
+        mPtrFrame.setKeepHeaderWhenRefresh(true);
+        mPtrFrame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrame.autoRefresh();
+            }
+        }, 100);
+    }
+
+    protected void updateData(){
+        mPtrFrame.refreshComplete();
+        Log.d("Ranking", "refresh complete ");
     }
 
 }

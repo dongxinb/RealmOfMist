@@ -32,6 +32,7 @@ dependencies {
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'com.getbase:floatingactionbutton:1.10.0'
     compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'in.srain.cube:ultra-ptr:1.0.10'
     compile files('libs/android-async-http-1.4.8.jar')
     compile project(":smssdk")
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
