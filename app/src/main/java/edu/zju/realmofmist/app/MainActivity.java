@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private boolean mRequestingLocationUpdates = true;
     private boolean mMoveToCurPos = false;
+    private boolean mSetMist = false;
 
     private LocationModel mCurrentLocation;
     private LocationRequest mLocationRequest;
@@ -107,8 +108,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         buildGoogleApiClient();
         createLocationRequest();
 
-//        setMistBitmap();
-
         mPaint = new Paint();
         mPaint.setAlpha(0);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         mMapView.onResume();
+        mMapView.getMapAsync(this);
         Log.d("MyDebug", "OnResume");
         super.onResume();
         if (mGoogleApiClient.isConnected() && !mRequestingLocationUpdates) {
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setMistBitmap() {
         Bitmap mistOrign = BitmapFactory.decodeResource(getResources(), R.drawable.mist);
         mMistBitmap = mistOrign.copy(Bitmap.Config.ARGB_8888, true);
-
+        Log.d("MyDebug", "setMistBit");
         LatLng Singapore = new LatLng(1.358557, 103.838171);
         GroundOverlayOptions newarkMap = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromBitmap(mMistBitmap))
@@ -318,16 +318,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.animateCamera(cameraUpdate);
             mMoveToCurPos = true;
         }
-//        if (mMap != null) {
-//            mapProcess();
-//            mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
-//        }
+        if (mMap != null) {
+            mapProcess();
+            mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
+        }
         Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
 
-        if (mTileProvider != null) {
-            mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
-            mTileoverlay.clearTileCache();
-        }
+//        if (mTileProvider != null) {
+//            mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
+//            mTileoverlay.clearTileCache();
+//        }
     }
 
     @Override
@@ -341,6 +341,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
+        if (mSetMist == false) {
+            setMistBitmap();
+            mSetMist = true;
+        }
+
         //        LatLng Singapore = new LatLng(1.358557, 103.838171);
 
 //        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
@@ -348,18 +353,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                .position(Singapore, 60000f, 45000f);
 //        mMap.addGroundOverlay(newarkMap);
 
-        mTileProvider = new FogTileProvider(mMap);
-        mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
-        TileOverlayOptions opts = new TileOverlayOptions();
-        opts.fadeIn(true);
-        opts.tileProvider(mTileProvider);
-        mTileoverlay = mMap.addTileOverlay(opts);
+//        mTileProvider = new FogTileProvider(mMap);
+//        mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
+//        TileOverlayOptions opts = new TileOverlayOptions();
+//        opts.fadeIn(true);
+//        opts.tileProvider(mTileProvider);
+//        mTileoverlay = mMap.addTileOverlay(opts);
 
     }
 
     private void mapProcess() {
         Canvas canvas = new Canvas(mMistBitmap);
-        canvas.drawCircle(-distLng(mCurrentLocation.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(mCurrentLocation.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 1, mPaint);
+        canvas.drawCircle(-distLng(mCurrentLocation.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(mCurrentLocation.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 2, mPaint);
     }
 
     private float distLat(double lat1, double lat2) {
