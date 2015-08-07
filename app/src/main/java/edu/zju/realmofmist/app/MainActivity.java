@@ -21,7 +21,9 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuProfile;
     FloatingActionButton mMenuRanking;
     FloatingActionButton mMenuLogin;
-    FogMask2 mMaskView;
+//    FogMask2 mMaskView;
 
     private LocationStorageModel mLocationStorage;
 
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMenuProfile = (FloatingActionButton)findViewById(R.id.menu_profile);
         mMenuRanking = (FloatingActionButton)findViewById(R.id.menu_ranking);
         mMenuLogin = (FloatingActionButton)findViewById(R.id.menu_login);
-        mMaskView = (FogMask2)findViewById(R.id.mask_view);
+//        mMaskView = (FogMask2)findViewById(R.id.mask_view);
 
         View.OnClickListener menuItemListener = new View.OnClickListener() {
             @Override
@@ -157,9 +159,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("OnPreDraw", "onPreDraw()");
         CameraPosition position = mMap.getCameraPosition();
         Log.d("Camera", String.format("%f %s", position.zoom, position.target.toString()));
-        mMaskView.setMap(mMap);
-        mMaskView.doDraw();
-        mMaskView.doDrawPath();
+//        mMaskView.setMap(mMap);
+//        mMaskView.doDraw();
+//        mMaskView.doDrawPath();
 //        System.out.println(mMap.getCameraPosition());
         return true;
     }
@@ -240,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mCurrentLocation = new LocationModel(currentLatitude, currentLongitude, DateFormat.getTimeInstance().format(new Date()));
 
         mLocationStorage.insertLocation(mCurrentLocation);
-        mMaskView.setLocationStorage(mLocationStorage.getLocationList());
+//        mMaskView.setLocationStorage(mLocationStorage.getLocationList());
 
         // move to current location when starting
         if (mMap != null && mMoveToCurPos == false) {
@@ -264,5 +266,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.setMyLocationEnabled(true);
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+
+        LatLng Singapore = new LatLng(1.358557, 103.838171);
+
+        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.mist))
+                .position(Singapore, 60000f, 45000f);
+        mMap.addGroundOverlay(newarkMap);
     }
 }
