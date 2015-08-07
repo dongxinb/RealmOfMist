@@ -5,7 +5,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="XingbaoDong"
+        android:text="XinbaoDong"
         android:id="@+id/name"
         android:textColor="@color/status_color"
         android:layout_alignParentTop="true"

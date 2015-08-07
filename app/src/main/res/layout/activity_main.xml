@@ -64,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/white"
-                fab:fab_title="Profile"
                 fab:fab_size="mini"
                 fab:fab_colorPressed="@color/main"
                 fab:fab_icon="@drawable/profile" />
@@ -74,7 +73,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/white"
-                fab:fab_title="Ranking"
                 fab:fab_size="mini"
                 fab:fab_colorPressed="@color/main"
                 fab:fab_icon="@drawable/ranking" />
@@ -84,9 +82,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/white"
-                fab:fab_title="Login"
                 fab:fab_size="mini"
-                fab:fab_colorPressed="@color/main"/>
+                fab:fab_colorPressed="@color/main"
+                fab:fab_icon="@drawable/login"/>
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
