@@ -7,9 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import edu.zju.realmofmist.R;
 import edu.zju.realmofmist.adapter.RankingListAdapter;
+import edu.zju.realmofmist.api.API;
+import edu.zju.realmofmist.api.APICallback;
+import edu.zju.realmofmist.model.User;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -61,12 +68,31 @@ public class RankingActivityFragment extends Fragment {
         mPtrFrame.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                frame.postDelayed(new Runnable() {
+//                frame.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        updateData();
+//                    }
+//                }, 1800);
+                API.getAreaList(User.getCurrentUser().getId(), new APICallback() {
                     @Override
-                    public void run() {
+                    public void onSuccess(JSONObject object) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(JSONArray array) {
+                        mAdapter.setRankingList(array);
                         updateData();
                     }
-                }, 1800);
+
+                    @Override
+                    public void onFailure(String description) {
+                        Toast toast = Toast.makeText(getActivity(), description, Toast.LENGTH_SHORT);
+                        toast.show();
+                        updateData();
+                    }
+                });
             }
 
             @Override

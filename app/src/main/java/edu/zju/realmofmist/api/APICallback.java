@@ -1,5 +1,6 @@
 package edu.zju.realmofmist.api;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -7,5 +8,6 @@ import org.json.JSONObject;
  */
 public interface APICallback {
     public void onSuccess(JSONObject object);
+    public void onSuccess(JSONArray array);
     public void onFailure(String description);
 }

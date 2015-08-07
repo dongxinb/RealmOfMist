@@ -11,9 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,6 +27,8 @@ import java.util.logging.LogRecord;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import edu.zju.realmofmist.R;
+import edu.zju.realmofmist.api.APICallback;
+import edu.zju.realmofmist.model.User;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -132,6 +138,25 @@ public class LoginActivityFragment extends Fragment {
                 //验证登陆
                 //SMSSDK.submitVerificationCode(mAreaCode,mPhoneNumber,mCaptchaNumber);
                 Log.d(mPhoneNumber, "点击登陆");
+                User.signIn(mPhoneText.getText().toString(), mAreaCodeText.getText().toString(), mCaptcha.getText().toString(), new APICallback() {
+                    @Override
+                    public void onSuccess(JSONObject object) {
+                        Toast toast = Toast.makeText(getActivity(), "Login Success!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        getActivity().finish();
+                    }
+
+                    @Override
+                    public void onSuccess(JSONArray array) {
+
+                    }
+
+                    @Override
+                    public void onFailure(String description) {
+                        Toast toast = Toast.makeText(getActivity(), description, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
             }
         });
     }

@@ -4,31 +4,38 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * Created by desolate on 15/8/5.
  */
 public class API {
-    public void signIn(String phone, String code, APICallback callback) {
-        RequestParams params = new RequestParams();
-        params.put("phone", phone);
-        params.put("code", code);
 
-        RequestBuilder.get("signIn", params, new JsonHttpResponseHandler() {
+    public static void getAreaList(String userId, final APICallback callback) {
+        RequestParams params = new RequestParams();
+        params.put("userId", userId);
+        RequestBuilder.post("areaList", params, new JsonHttpResponseHandler()  {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONObject res = response.getJSONObject("result");
+                    if (res.getInt("code") == 200) {
+                        callback.onSuccess(res.getJSONArray("data"));
+                    }else {
+                        callback.onFailure(res.getString("description"));
+                    }
+                }catch (Exception e) {
+                    System.out.println(e);
+                }
 
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                callback.onFailure("Network Error!");
             }
         });
-    }
-
-    public void requestCaptcha(String phone, APICallback callback) {
 
     }
 }

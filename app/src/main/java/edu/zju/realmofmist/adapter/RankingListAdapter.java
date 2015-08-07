@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Vector;
@@ -25,7 +27,7 @@ public class RankingListAdapter extends BaseAdapter {
     private TextView mAreaText;
     private TextView mRankingText;
 
-    private Vector<RankingModel> mRankingModel;
+    private Vector<RankingModel> mRankingModel = new Vector<>();
 
     private static LayoutInflater sInflater = null;
 
@@ -35,11 +37,25 @@ public class RankingListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return mRankingModel.size();
 //        if (mRankingModel == null)
 //            return 0;
 //        else
 //            return mRankingModel.size();
+    }
+
+    public void setRankingList(JSONArray array) {
+        mRankingModel = new Vector<>();
+        for (int i = 0; i < array.length(); i ++) {
+            try {
+                JSONObject object = array.getJSONObject(i);
+                RankingModel model = new RankingModel(object.getString("name"), object.getDouble("area"));
+                mRankingModel.add(model);
+            }catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -62,6 +78,10 @@ public class RankingListAdapter extends BaseAdapter {
         mAreaText = (TextView)useView.findViewById(R.id.area);
         mRankingText = (TextView)useView.findViewById(R.id.ranking);
 
+        RankingModel model = mRankingModel.get(i);
+        mNameText.setText(model.getName());
+        mAreaText.setText(String.format("%d", (int)model.getArea()));
+        mRankingText.setText(String.format("%d", i + 1));
         return useView;
     }
 

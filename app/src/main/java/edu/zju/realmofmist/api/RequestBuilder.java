@@ -24,6 +24,7 @@ public class RequestBuilder {
     private static final String BASE_URL = "https://leancloud.cn/1.1/functions/";
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        params.setUseJsonStreamer(true);
         if (!initialized) {
             client.addHeader("X-AVOSCloud-Application-Id", avos_id);
             client.addHeader("X-AVOSCloud-Application-Key", avos_key);
@@ -36,6 +37,7 @@ public class RequestBuilder {
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        params.setUseJsonStreamer(true);
         if (!initialized) {
             client.addHeader("X-AVOSCloud-Application-Id", avos_id);
             client.addHeader("X-AVOSCloud-Application-Key", avos_key);
