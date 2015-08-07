@@ -108,7 +108,6 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
         }
         Rect dirty = new Rect(0, getHeight(), getWidth(), getHeight());
         try {
-            Log.d("DoDraw", (j++) + "");
             Canvas canvas = surface.lockCanvas(dirty);
             if (canvas == null) {
                 surface.release();
@@ -121,10 +120,8 @@ public class FogMask2 extends TextureView implements TextureView.SurfaceTextureL
             if (locationStorage != null)
                 size = locationStorage.size();
             if (size > 0 && map != null) {
-                Log.d("DoDraw", j + " 1");
                 for (int i = 0; i < size; i++) {
                     android.graphics.Point point = map.getProjection().toScreenLocation(locationStorage.get(i).toLatLng());
-                    Log.d("MYMAP", i+ " " +point.toString());
                     path.addCircle(point.x, point.y, 40, Path.Direction.CW);
                 }
             }

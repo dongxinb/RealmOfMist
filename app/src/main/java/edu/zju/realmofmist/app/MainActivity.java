@@ -27,6 +27,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -102,8 +103,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        addPreDrawListener();
 
         mMapView.onCreate(savedInstanceState);
+        Log.d("MAPVIEW", mMapView.toString() + " 2");
 //        mMapView.onResume();
         mMapView.getMapAsync(this);
+        Log.d("MAPVIEW", mMapView.toString() + " 3");
 
         mLocationStorage = new LocationStorageModel();
         buildGoogleApiClient();
@@ -142,12 +145,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         mMapView.onResume();
-        mMapView.getMapAsync(this);
         Log.d("MyDebug", "OnResume");
         super.onResume();
         if (mGoogleApiClient.isConnected() && !mRequestingLocationUpdates) {
             startLocationUpdates();
         }
+        Log.d("MAPVIEW", mMapView.toString() + " 4");
+        mMapView = (MyMapView) findViewById(R.id.mapView);
+        mMapView.getMapAsync(this);
+        Log.d("MAPVIEW", mMapView.toString() + " 5");
     }
 
     @Override
@@ -226,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // set up fragment
     private void setMapView() {
         mMapView = (MyMapView) findViewById(R.id.mapView);
-
+        Log.d("MAPVIEW", mMapView.toString() + " 1");
     }
 
     private void setMistBitmap() {
@@ -239,6 +245,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .image(BitmapDescriptorFactory.fromBitmap(mMistBitmap))
                 .position(Singapore, MistSize, MistSize);
         mImageOverlay = mMap.addGroundOverlay(newarkMap);
+
+        for (int i = 0; i < mLocationStorage.getSize(); i++) {
+            mapProcess(mLocationStorage.getLocation(i));
+        }
     }
 
     // set up google play service
