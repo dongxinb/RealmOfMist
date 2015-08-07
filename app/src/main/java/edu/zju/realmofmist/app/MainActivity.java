@@ -1,6 +1,13 @@
 package edu.zju.realmofmist.app;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +30,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -48,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuLogin;
 //    FogMask2 mMaskView;
 
+    public static float MistSize = 60000f;
+    public static float ImageSize = 637 * 2f;
+
     private LocationStorageModel mLocationStorage;
 
     private MyMapView mMapView;
@@ -59,8 +72,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean mMoveToCurPos = false;
 
     private LocationModel mCurrentLocation;
-    private String mLastUpdateTime;
     private LocationRequest mLocationRequest;
+
+    private Bitmap mMistBitmap;
+    private Paint mPaint;
+    private GroundOverlay mImageOverlay;
 
     // Request code to use when launching the resolution activity
     private static final int REQUEST_RESOLVE_ERROR = 1001;
@@ -74,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("MyDebug", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -83,16 +100,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        addPreDrawListener();
 
         mMapView.onCreate(savedInstanceState);
-        mMapView.onResume();
+//        mMapView.onResume();
         mMapView.getMapAsync(this);
 
         mLocationStorage = new LocationStorageModel();
         buildGoogleApiClient();
         createLocationRequest();
+
+//        setMistBitmap();
+
+        mPaint = new Paint();
+        mPaint.setAlpha(0);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mPaint.setAntiAlias(true);
     }
 
     @Override
     protected void onStart() {
+        Log.d("MyDebug", "OnStart");
         super.onStart();
         if (!mResolvingError) {  // more about this later
             mGoogleApiClient.connect();
@@ -101,14 +126,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onStop() {
+        Log.d("MyDebug", "OnStop");
         super.onStop();
         stopLocationUpdates();
         mGoogleApiClient.disconnect();
     }
 
     @Override
+    protected void onPause() {
+        Log.d("MyDebug", "OnPause");
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
     public void onResume() {
         mMapView.onResume();
+        Log.d("MyDebug", "OnResume");
         super.onResume();
         if (mGoogleApiClient.isConnected() && !mRequestingLocationUpdates) {
             startLocationUpdates();
@@ -117,8 +151,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onDestroy() {
-        mMapView.onDestroy();
+        Log.d("MyDebug", "OnDestroy");
         super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory () {
+        Log.d("MyDebug", "OnLowMemory");
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState (Bundle outState) {
+        Log.d("MyDebug", "OnSave");
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
     }
 
     private void linkView() {
@@ -177,6 +226,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setMapView() {
         mMapView = (MyMapView) findViewById(R.id.mapView);
 
+    }
+
+    private void setMistBitmap() {
+        Bitmap mistOrign = BitmapFactory.decodeResource(getResources(), R.drawable.mist);
+        mMistBitmap = mistOrign.copy(Bitmap.Config.ARGB_8888, true);
+
+        LatLng Singapore = new LatLng(1.358557, 103.838171);
+        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromBitmap(mMistBitmap))
+                .position(Singapore, MistSize, MistSize);
+        mImageOverlay = mMap.addGroundOverlay(newarkMap);
     }
 
     // set up google play service
@@ -258,8 +318,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.animateCamera(cameraUpdate);
             mMoveToCurPos = true;
         }
-        if (mMap != null)
-            Log.d("MYMAP", mMap.getCameraPosition().toString() + " " + mMap.getMaxZoomLevel() + " " + mMap.getMinZoomLevel());
+//        if (mMap != null) {
+//            mapProcess();
+//            mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
+//        }
         Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
 
         if (mTileProvider != null) {
@@ -279,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
-//        LatLng Singapore = new LatLng(1.358557, 103.838171);
+        //        LatLng Singapore = new LatLng(1.358557, 103.838171);
 
 //        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
 //                .image(BitmapDescriptorFactory.fromResource(R.drawable.mist))
@@ -292,6 +354,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         opts.fadeIn(true);
         opts.tileProvider(mTileProvider);
         mTileoverlay = mMap.addTileOverlay(opts);
+
+    }
+
+    private void mapProcess() {
+        Canvas canvas = new Canvas(mMistBitmap);
+        canvas.drawCircle(-distLng(mCurrentLocation.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(mCurrentLocation.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 1, mPaint);
+    }
+
+    private float distLat(double lat1, double lat2) {
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c);
+        return dist * (float)(dLat / Math.abs(dLat));
+    }
+
+    private float distLng(double lng1, double lng2) {
+        double earthRadius = 6371000; //meters
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c);
+        return dist * (float)(dLng / Math.abs(dLng));
     }
 
 
