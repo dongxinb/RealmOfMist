@@ -138,15 +138,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onPause() {
         Log.d("MyDebug", "OnPause");
-        super.onPause();
         mMapView.onPause();
+        super.onPause();
+        Log.d("MAPVIEW", mMapView.toString() + " 6");
     }
 
     @Override
     public void onResume() {
-        mMapView.onResume();
         Log.d("MyDebug", "OnResume");
         super.onResume();
+        mMapView.onResume();
         if (mGoogleApiClient.isConnected() && !mRequestingLocationUpdates) {
             startLocationUpdates();
         }
@@ -249,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < mLocationStorage.getSize(); i++) {
             mapProcess(mLocationStorage.getLocation(i));
         }
+        mImageOverlay.setImage(BitmapDescriptorFactory.fromBitmap(mMistBitmap));
     }
 
     // set up google play service
@@ -353,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setMyLocationEnabled(true);
         mMap = googleMap;
+        mMap.setIndoorEnabled(false);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
         // set mist bitmap
