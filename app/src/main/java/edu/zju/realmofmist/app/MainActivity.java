@@ -154,11 +154,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     //pre draw listener
     @Override
     public boolean onPreDraw() {
-//        Log.d("OnPreDraw", "onPreDraw()");
+        Log.d("OnPreDraw", "onPreDraw()");
         CameraPosition position = mMap.getCameraPosition();
         Log.d("Camera", String.format("%f %s", position.zoom, position.target.toString()));
+        mMaskView.setMap(mMap);
         mMaskView.doDraw();
-//        System.out.println(mMap.getCameraPosition());
+        System.out.println(mMap.getCameraPosition());
         return true;
     }
 
@@ -247,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.animateCamera(cameraUpdate);
             mMoveToCurPos = true;
         }
-//        if (mMap != null)
-//            Log.d("MYMAP", mMap.getCameraPosition().toString() + " " + mMap.getMaxZoomLevel() + " " + mMap.getMinZoomLevel());
+        if (mMap != null)
+            Log.d("MYMAP", mMap.getCameraPosition().toString() + " " + mMap.getMaxZoomLevel() + " " + mMap.getMinZoomLevel());
         Log.d("Locations", mLocationStorage.getLocation(mLocationStorage.getSize()-1).toString());
     }
 
@@ -262,6 +263,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.setMyLocationEnabled(true);
         mMap = googleMap;
         mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
-        mMaskView.setMap(mMap);
     }
 }
