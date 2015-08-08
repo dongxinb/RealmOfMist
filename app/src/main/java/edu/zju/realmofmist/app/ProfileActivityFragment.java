@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import edu.zju.realmofmist.R;
+import edu.zju.realmofmist.model.User;
 import edu.zju.realmofmist.view.RoundImageView;
 
 /**
@@ -37,9 +38,18 @@ public class ProfileActivityFragment extends Fragment {
     public void linkView(View view){
         userIconImage = (RoundImageView)view.findViewById(R.id.userIconImage);
         userNameText = (TextView)view.findViewById(R.id.userNameText);
-        phoneNumberText = (TextView)view.findViewById(R.id.phoneNumberText);
+        phoneNumberText = (TextView)view.findViewById(R.id.userPhoneText);
         areaText = (TextView)view.findViewById(R.id.userAreaText);
-        rankingText = (TextView)view.findViewById(R.id.userRankingText);
+//        rankingText = (TextView)view.findViewById(R.id.userRankingText);
+
+        phoneNumberText.setText("");
+        try {
+            areaText.setText(String.format("%d", (int) User.getCurrentUser().getArea()));
+//            phoneNumberText.setText(User.getCurrentUser().getName());
+            userNameText.setText(User.getCurrentUser().getName());
+        }catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
 

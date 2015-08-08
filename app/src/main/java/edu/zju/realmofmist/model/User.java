@@ -67,17 +67,20 @@ public class User {
         RequestParams params = new RequestParams();
         params.put("userId", User.getCurrentUser().getId());
         params.put("area", User.getCurrentUser().getArea());
-        RequestBuilder.post("updateArea", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        if (User.getCurrentUser().getId() != null && User.getCurrentUser().getId().length() != 0) {
+            RequestBuilder.post("updateArea", params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-            }
+                }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
     public void signOut() {

@@ -41,6 +41,8 @@ public class LocationStorageModel {
             locations.save();
             Log.d("LocationStorageModel", String.format("Save: %f %f", newLocation.getLongitude(), newLocation.getLongitude()));
             locationList.add(newLocation);
+            User.getCurrentUser().setArea((double)locationList.size());
+            User.getCurrentUser().updateArea();
             return true;
         }
         return false;
