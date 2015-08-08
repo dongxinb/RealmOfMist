@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -27,25 +26,19 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.TileOverlay;
-import com.google.android.gms.maps.model.TileOverlayOptions;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 import edu.zju.realmofmist.R;
 import edu.zju.realmofmist.util.FogTileProvider;
-import edu.zju.realmofmist.view.FogMask2;
 import edu.zju.realmofmist.model.LocationModel;
 import edu.zju.realmofmist.model.LocationStorageModel;
 import edu.zju.realmofmist.view.MyMapView;
@@ -57,10 +50,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     FloatingActionButton mMenuProfile;
     FloatingActionButton mMenuRanking;
     FloatingActionButton mMenuLogin;
-//    FogMask2 mMaskView;
 
     public static float MistSize = 60000f;
-    public static float ImageSize = 637 * 2f;
+    public float ImageSize = 637;
 
     private LocationStorageModel mLocationStorage;
 
@@ -96,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("MyDebug", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageSize = 637 * getResources().getDisplayMetrics().density;
 
         linkView();
         setMapView();
@@ -183,7 +177,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMenuProfile = (FloatingActionButton)findViewById(R.id.menu_profile);
         mMenuRanking = (FloatingActionButton)findViewById(R.id.menu_ranking);
         mMenuLogin = (FloatingActionButton)findViewById(R.id.menu_login);
-//        mMaskView = (FogMask2)findViewById(R.id.mask_view);
 
         View.OnClickListener menuItemListener = new View.OnClickListener() {
             @Override
@@ -233,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // set up fragment
     private void setMapView() {
         mMapView = (MyMapView) findViewById(R.id.mapView);
-        Log.d("MAPVIEW", mMapView.toString() + " 1");
     }
 
     private void setMistBitmap() {
@@ -339,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-
 //        if (mTileProvider != null) {
 //            mTileProvider.setLocationStorage(mLocationStorage.getLocationList());
 //            mTileoverlay.clearTileCache();
@@ -381,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void mapProcess(LocationModel location) {
+//        mMistCanvas.drawCircle(ImageSize / 2, ImageSize / 2, 20, mPaint);
         mMistCanvas.drawCircle(-distLng(location.getLongitude(), 103.838171) / MistSize * ImageSize + ImageSize / 2, distLat(location.getLatitude(), 1.358557) / MistSize * ImageSize + ImageSize / 2, 1, mPaint);
     }
 

@@ -34,8 +34,6 @@
             map:uiScrollGestures="true"
             />
 
-
-
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/menu_actions"
             android:layout_width="wrap_content"
